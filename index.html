@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WalletConnect A-Z Wallets (Modern)</title>
+  
+  <script type="module" src="https://unpkg.com/@web3modal/ethers@5.0.0/dist/index.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body { font-family: sans-serif; background: #f4f4f4; margin: 0; padding: 20px; }
+    h1, h2 { text-align: center; }
+    .wallet-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+    .wallet { background: #fff; border-radius: 8px; padding: 10px; text-align: center; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
+    .wallet img { width: 60px; height: 60px; object-fit: contain; }
+    .connect-button { 
+        margin-top: 10px; 
+        padding: 5px 10px; 
+        background: #4F46E5; 
+        color: white; 
+        border: none; 
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .wallet-links {
+        margin-top: 10px;
+        font-size: 0.8rem;
+    }
+    .wallet-links a {
+        margin: 0 5px;
+        color: #4F46E5;
+        text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Connect Wallet</h1>
+  <h2>Supported Wallets A-Z</h2>
+  <div class="wallet-grid" id="walletList">
+    </div>  
+  <script type="module">
+    import { createWeb3Modal, defaultConfig } from 'https://unpkg.com/@web3modal/ethers@5.0.0/dist/index.js';
+
+    // Get your projectId from WalletConnect Cloud Dashboard
+    const projectId = "0e0d74e5227e248cffdc16006c9e7e2f";
+
+    // 1. Define the chains your dApp will support
+    const mainnet = {
+        chainId: 1,
+        name: 'Ethereum',
+        currency: 'ETH',
+        explorerUrl: 'https://etherscan.io',
+        rpcUrl: 'https://cloudflare-eth.com',
+    };
+    const bsc = {
+        chainId: 56,
+        name: 'BNB Smart Chain',
+        currency: 'BNB',
+        explorerUrl: 'https://bscscan.com',
+        rpcUrl: 'https://bsc-dataseed1.binance.org',
+    };
+    const chains = [mainnet, bsc];
+
+    // 2. Create a metadata object for your dApp
+    const metadata = {
+        name: 'Connect Wallet App',
+        description: 'A Web3 demo to connect to various wallets',
+        url: window.location.origin,
+        icons: ['https://avatars.githubusercontent.com/u/37784886']
+    };
+
+    // 3. Create Web3Modal configuration
+    const web3ModalConfig = defaultConfig({
+        metadata,
+        enableEIP6963: true,
+        enableInjected: true,
+        enableCoinbase: true,
+        rpcUrl: 'https://cloudflare-eth.com',
+        defaultChainId: 1,
+    });
+
+    // 4. Create a Web3Modal instance
+    const web3Modal = createWeb3Modal({
+        ethersConfig: web3ModalConfig,
+        chains: chains,
+        projectId: projectId,
+        enableAnalytics: true,
+    });
+
+    const wallets = [
+      { name: "1inch", logo: "https://registry.walletconnect.com/v2/logo/lg/1f0c8a3f-1inch.jpg", android: "https://play.google.com/store/apps/details?id=com.OneInch.wallet", ios: "https://apps.apple.com/us/app/1inch-crypto-defi-wallet/id1546049391", windows: "N/A" },
+      { name: "AlphaWallet", logo: "https://registry.walletconnect.com/v2/logo/lg/38d9294e-alphawallet.jpg", android: "https://play.google.com/store/apps/details?id=io.stormbird.wallet", ios: "https://apps.apple.com/us/app/alphawallet-ethereum-wallet/id1396260742", windows: "N/A" },
+      { name: "Argent", logo: "https://registry.walletconnect.com/v2/logo/lg/5d1793b6-argent.jpg", android: "https://play.google.com/store/apps/details?id=im.argent.contractwalletclient", ios: "https://apps.apple.com/us/app/argent/id1358741926", windows: "N/A" },
+      { name: "Atomic Wallet", logo: "https://registry.walletconnect.com/v2/logo/lg/38d9294e-atomicwallet.jpg", android: "https://play.google.com/store/apps/details?id=io.atomicwallet", ios: "https://apps.apple.com/jp/app/atomic-wallet/id1478257827?l=en-US", windows: "https://atomicwallet.io/downloads" },
+      { name: "Best Wallet", logo: "https://registry.walletconnect.com/v2/logo/lg/5a38a7c2-best-wallet.jpg", android: "https://play.google.com/store/apps/details?id=com.google.android.apps.walletnfcrel", ios: "https://apps.apple.com/us/app/google-wallet/id1575294576", windows: "N/A" },
+      { name: "Binance", logo: "https://registry.walletconnect.com/v2/logo/lg/9c875b19-binance.jpg", android: "https://play.google.com/store/apps/details?id=com.binance.dev", ios: "https://apps.apple.com/kn/app/binance-buy-bitcoin-crypto/id1436799971", windows: "https://www.binance.com/en/download" },
+      { name: "Bitget", logo: "https://registry.walletconnect.com/v2/logo/lg/18a4b92f-bitget.jpg", android: "https://play.google.com/store/apps/details?id=com.bitget.wallet", ios: "https://apps.apple.com/us/app/bitget-wallet/id1588697626", windows: "https://web3.bitget.com/en/wallet-download" },
+      { name: "Blockchain", logo: "https://registry.walletconnect.com/v2/logo/lg/1b7d78b0-blockchain.jpg", android: "https://play.google.com/store/apps/details?id=piuk.blockchain.android", ios: "https://apps.apple.com/us/app/blockchain-com-wallet-exchange/id493253309", windows: "https://www.blockchain.com/wallet" },
+      { name: "Bybit Web3 Wallet", logo: "https://registry.walletconnect.com/v2/logo/lg/b66e5124-bybit.jpg", android: "https://play.google.com/store/apps/details?id=com.bybit.app", ios: "https://apps.apple.com/us/app/bybit-buy-bitcoin-crypto/id1527627402", windows: "N/A (Browser Extension)" },
+      { name: "Celo", logo: "https://registry.walletconnect.com/v2/logo/lg/1b7d78b0-celo.jpg", android: "https://play.google.com/store/apps/details?id=co.clabs.valora", ios: "https://apps.apple.com/us/app/valora/id1520109968", windows: "https://celoterminal.com/" },
+      { name: "Coin98", logo: "https://registry.walletconnect.com/v2/logo/lg/1e9945b3-coin98.jpg", android: "https://play.google.com/store/apps/details?id=com.coin98.wallet", ios: "https://apps.apple.com/us/app/coin98-super-app-defi-wallet/id1539266743", windows: "N/A (Browser Extension)" },
+      { name: "Coinbase", logo: "https://registry.walletconnect.com/v2/logo/lg/0b6c9d16-coinbase.jpg", android: "https://play.google.com/store/apps/details?id=org.toshi", ios: "https://apps.apple.com/us/app/coinbase-wallet/id1278383455", windows: "N/A (Browser Extension)" },
+      { name: "Crypto.com", logo: "https://registry.walletconnect.com/v2/logo/lg/47b5b78e-cryptocom.jpg", android: "https://play.google.com/store/apps/details?id=com.defi.wallet", ios: "https://apps.apple.com/us/app/crypto-com-defi-wallet/id1517006764", windows: "N/A" },
+      { name: "Ellipal", logo: "https://registry.walletconnect.com/v2/logo/lg/37d04f1e-ellipal.jpg", android: "https://play.google.com/store/apps/details?id=com.ellipal.wallet.app", ios: "https://apps.apple.com/jp/app/ellipal/id1426179665?l=en", windows: "N/A" },
+      { name: "Exodus", logo: "https://registry.walletconnect.com/v2/logo/lg/0baf2567-exodus.jpg", android: "https://play.google.com/store/apps/details?id=exodusmovement.exodus", ios: "https://apps.apple.com/au/app/exodus-crypto-bitcoin-wallet/id1414384820", windows: "https://www.exodus.com/download/" },
+      { name: "Gnosis Safe", logo: "https://registry.walletconnect.com/v2/logo/lg/550cf609-gnosis-safe.jpg", android: "https://play.google.com/store/apps/details?id=io.gnosis.safe", ios: "https://apps.apple.com/jp/app/safe-wallet/id1515759131?l=en-US", windows: "N/A" },
+      { name: "Guarda", logo: "https://registry.walletconnect.com/v2/logo/lg/c1c3a647-guarda.jpg", android: "https://play.google.com/store/apps/details?id=com.crypto.multiwallet", ios: "https://apps.apple.com/us/app/guarda-crypto-bitcoin-wallet/id1442080352", windows: "https://guarda.com/download" },
+      { name: "Harmony", logo: "https://registry.walletconnect.com/v2/logo/lg/1b7d78b0-harmony.jpg", android: "https://play.google.com/store/apps/details?id=com.coin98.wallet", ios: "https://apps.apple.com/us/app/coin98-super-app-defi-wallet/id1539266743", windows: "N/A (supported by other wallets)" },
+      { name: "imToken", logo: "https://registry.walletconnect.com/v2/logo/lg/8a5c37b6-imtoken.jpg", android: "https://play.google.com/store/apps/details?id=com.token.im", ios: "https://apps.apple.com/us/app/imtoken-eth-btc-wallet/id1384067389", windows: "N/A" },
+      { name: "Keplr Wallet", logo: "https://registry.walletconnect.com/v2/logo/lg/8a6198f3-keplr.jpg", android: "https://play.google.com/store/apps/details?id=com.chainapsis.keplr", ios: "https://apps.apple.com/us/app/keplr-wallet/id1567850021", windows: "N/A (Browser Extension)" },
+      { name: "Ledger Live", logo: "https://registry.walletconnect.com/v2/logo/lg/4a49ed50-ledger.jpg", android: "https://play.google.com/store/apps/details?id=com.ledger.live", ios: "https://apps.apple.com/us/app/ledger-live-crypto-nft-app/id1364505325", windows: "https://www.ledger.com/ledger-live/download" },
+      { name: "Magic Eden Wallet", logo: "https://registry.walletconnect.com/v2/logo/lg/d9c7d4e5-magic-eden.jpg", android: "https://play.google.com/store/apps/details?id=com.magiceden.app", ios: "https://apps.apple.com/us/app/magic-eden/id6449911295", windows: "N/A" },
+      { name: "Math Wallet", logo: "https://registry.walletconnect.com/v2/logo/lg/223a492f-mathwallet.jpg", android: "https://play.google.com/store/apps/details?id=com.mathwallet.android", ios: "https://apps.apple.com/us/app/mathwallet-blockchain-wallet/id1527770928", windows: "N/A (Browser Extension)" },
+      { name: "MetaMask", logo: "https://registry.walletconnect.com/v2/logo/lg/2c4c15ed-metamask.jpg", android: "https://play.google.com/store/apps/details?id=io.metamask", ios: "https://apps.apple.com/us/app/metamask-blockchain-wallet/id1438144202", windows: "N/A (Browser Extension)" },
+      { name: "MyEtherWallet", logo: "https://registry.walletconnect.com/v2/logo/lg/3c81e9f1-myetherwallet.jpg", android: "https://play.google.com/store/apps/details?id=com.myetherwallet.mewwallet", ios: "https://apps.apple.com/us/app/mew-wallet/id1464614026", windows: "N/A" },
+      { name: "Nami Wallet", logo: "https://registry.walletconnect.com/v2/logo/lg/5c1a704e-nami-wallet.jpg", android: "https://play.google.com/store/apps/details?id=com.namiwallet", ios: "https://apps.apple.com/us/app/nami-wallet/id1659972323", windows: "N/A (Browser Extension)" },
+      { name: "Phantom", logo: "https://registry.walletconnect.com/v2/logo/lg/df4e7f85-phantom.jpg", android: "https://play.google.com/store/apps/details?id=app.phantom", ios: "https://apps.apple.com/us/app/phantom-solana-wallet/id1598432977", windows: "N/A (Browser Extension)" },
+      { name: "Rabby Wallet", logo: "https://registry.walletconnect.com/v2/logo/lg/5e01f092-rabby.jpg", android: "https://play.google.com/store/apps/details?id=com.rabby.wallet", ios: "https://apps.apple.com/us/app/rabby-wallet-crypto-defi/id1661338871", windows: "N/A (Browser Extension)" },
+      { name: "Rainbow", logo: "https://registry.walletconnect.com/v2/logo/lg/e50172ec-rainbow.jpg", android: "https://play.google.com/store/apps/details?id=com.rainbowme.wallet", ios: "https://apps.apple.com/us/app/rainbow-ethereum-wallet/id1485609333", windows: "N/A" },
+      { name: "SafePal", logo: "https://registry.walletconnect.com/v2/logo/lg/2f161f36-safepal.jpg", android: "https://play.google.com/store/apps/details?id=io.safepal.wallet", ios: "https://apps.apple.com/us/app/safepal-wallet/id1457193301", windows: "N/A" },
+      { name: "Sparrow", logo: "https://registry.walletconnect.com/v2/logo/lg/98f1f72a-sparrow.jpg", android: "https://play.google.com/store/apps/details?id=com.sparrowwallet", ios: "https://apps.apple.com/us/app/sparrow-wallet-for-bitcoin/id1639016149", windows: "https://www.sparrowwallet.com/" },
+      { name: "Starknet", logo: "https://registry.walletconnect.com/v2/logo/lg/98f1f72a-starknet.jpg", android: "https://play.google.com/store/apps/details?id=com.argent.starknet.app", ios: "https://apps.apple.com/us/app/argent-starknet-wallet/id1612739324", windows: "N/A" },
+      { name: "Tangem Wallet", logo: "https://registry.walletconnect.com/v2/logo/lg/f39566d5-tangem.jpg", android: "https://play.google.com/store/apps/details?id=com.tangem.wallet", ios: "https://apps.apple.com/us/app/tangem-wallet/id1588720138", windows: "N/A" },
+      { name: "TokenPocket", logo: "https://registry.walletconnect.com/v2/logo/lg/3a09fd42-tokenpocket.jpg", android: "https://play.google.com/store/apps/details?id=com.tokenpocket", ios: "https://apps.apple.com/us/app/tokenpocket-crypto-defi-nft/id1446062772", windows: "N/A" },
+      { name: "Trezor", logo: "https://registry.walletconnect.com/v2/logo/lg/4a49ed50-trezor.jpg", android: "https://play.google.com/store/apps/details?id=com.trezor.suite", ios: "N/A", windows: "https://suite.trezor.io/" },
+      { name: "Trust Wallet", logo: "https://registry.walletconnect.com/v2/logo/lg/588df2d6-trust.jpg", android: "https://play.google.com/store/apps/details?id=com.trustwallet.mobile", ios: "https://apps.apple.com/us/app/trust-wallet-crypto-btc-wallet/id1288339409", windows: "N/A" },
+      { name: "Unstoppable Wallet", logo: "https://registry.walletconnect.com/v2/logo/lg/f45a5573-unstoppable-wallet.jpg", android: "https://play.google.com/store/apps/details?id=io.horizontalsystems.bankwallet", ios: "https://apps.apple.com/us/app/unstoppable-wallet/id1447619907", windows: "N/A" },
+      { name: "Zengo", logo: "https://registry.walletconnect.com/v2/logo/lg/1b7d78b0-zengo.jpg", android: "https://play.google.com/store/apps/details?id=com.zengo.wallet", ios: "https://apps.apple.com/us/app/zengo-crypto-and-bitcoin-wallet/id1455581206", windows: "N/A" },
+      { name: "Zerion", logo: "https://registry.walletconnect.com/v2/logo/lg/e7d088c0-zerion.jpg", android: "https://play.google.com/store/apps/details?id=io.zerion.android", ios: "https://apps.apple.com/us/app/zerion-defi-wallet/id1522434520", windows: "N/A" }
+    ];
+
+    const walletList = document.getElementById("walletList");
+    wallets.forEach(wallet => {
+      const div = document.createElement("div");
+      div.className = "wallet";
+      div.innerHTML = `
+        <img src="${wallet.logo}" alt="${wallet.name}" />
+        <p>${wallet.name}</p>
+        <button class="connect-button" onclick="connectWallet()">Connect</button>
+        <div class="wallet-links">
+            ${wallet.android !== "N/A" ? `<a href="${wallet.android}" target="_blank">Android</a>` : ''}
+            ${wallet.ios !== "N/A" ? `<a href="${wallet.ios}" target="_blank">iOS</a>` : ''}
+            ${wallet.windows !== "N/A" ? `<a href="${wallet.windows}" target="_blank">Windows</a>` : ''}
+        </div>
+      `;
+      walletList.appendChild(div);
+    });
+
+    async function connectWallet() {
+      try {
+        await web3Modal.open();
+        // The modal will handle the rest.
+        // You can use web3Modal.getAccount() to get the connected account info.
+      } catch (err) {
+        console.error("Connection failed", err);
+      }
+    }
+  </script>
+</body>
+</html>
